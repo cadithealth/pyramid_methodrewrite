@@ -3,10 +3,10 @@
 The ``pyramid_methodrewrite`` package is a pyramid plugin that adds a
 "tween" that rewrites the active HTTP method (as exposed via
 ``request.method``) to the value provided in a query-string. The main
-reason for this is to allow clients to use HTTP methods beyond GET and
-POST (such as PUT and DELETE) that are behind non-compliant proxies,
-browsers, or other deficient software that limit which HTTP methods
-can be sent.
+reason for this is to allow clients to fake the use HTTP methods
+beyond GET and POST (such as PUT and DELETE) that are behind
+non-compliant proxies, browsers, or other deficient software that
+limit which HTTP methods can be sent.
 
 It does this by inspecting the query-string or POST data, and if a
 parameter named `_method` is found (the actual name is configurable)
