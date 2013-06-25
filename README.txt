@@ -19,6 +19,23 @@ request's ``.method`` attribute.
 $ pip install pyramid-methodrewrite
 ```
 
+## Usage
+
+Enable the tween either in your INI file via:
+
+```
+pyramid.includes = pyramid_methodrewrite
+```
+
+or in code in your package's application initialization via:
+
+``` python
+def main(global_config, **settings):
+  # ...
+  config.include('pyramid_methodrewrite')
+  # ...
+```
+
 ## Configuration
 
 The following configuration settings can be set in your application's
