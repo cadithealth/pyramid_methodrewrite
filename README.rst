@@ -1,4 +1,6 @@
-# pyramid_methodrewrite
+========================
+Pyramid Method Rewriting
+========================
 
 The ``pyramid_methodrewrite`` package is a pyramid plugin that adds a
 "tween" that rewrites the active HTTP method (as exposed via
@@ -13,30 +15,56 @@ parameter named `_method` is found (the actual name is configurable)
 and is of the known set of HTTP methods, will override the active
 request's ``.method`` attribute.
 
-## Installation
+For example, the request:
 
-```
-$ pip install pyramid-methodrewrite
-```
+.. code-block:: text
 
-## Usage
+  GET /path/to/resource?_method=OPTIONS HTTP/1.1
+
+Is transformed to:
+
+.. code-block:: text
+
+  OPTIONS /path/to/resource HTTP/1.1
+
+
+Project
+=======
+
+* Homepage: https://github.com/cadithealth/pyramid_methodrewrite
+* Bugs: https://github.com/cadithealth/pyramid_methodrewrite/issues
+
+
+Installation
+============
+
+
+.. code-block:: bash
+
+  $ pip install pyramid-methodrewrite
+
+
+Usage
+=====
 
 Enable the tween either in your INI file via:
 
-```
-pyramid.includes = pyramid_methodrewrite
-```
+.. code-block:: ini
+
+  pyramid.includes = pyramid_methodrewrite
 
 or in code in your package's application initialization via:
 
-``` python
-def main(global_config, **settings):
-  # ...
-  config.include('pyramid_methodrewrite')
-  # ...
-```
+.. code-block:: python
 
-## Configuration
+  def main(global_config, **settings):
+    # ...
+    config.include('pyramid_methodrewrite')
+    # ...
+
+
+Configuration
+=============
 
 The following configuration settings can be set in your application's
 ``main`` section:
