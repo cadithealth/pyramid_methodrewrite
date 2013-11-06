@@ -21,7 +21,7 @@ For example, the request:
 
   GET /path/to/resource?_method=OPTIONS HTTP/1.1
 
-Is transformed to:
+Becomes equivalent (from the application's point of view) to:
 
 .. code-block:: text
 
