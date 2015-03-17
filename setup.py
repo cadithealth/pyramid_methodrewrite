@@ -22,13 +22,13 @@ def read(*parts, **kw):
 test_dependencies = [
   'nose                 >= 1.3.0',
   'coverage             >= 3.5.3',
-  ]
+]
 
 dependencies = [
   'pyramid              >= 1.4',
   'distribute           >= 0.6.24',
   'pyramid              >= 1.4.2',
-  ]
+]
 
 classifiers = [
   'Intended Audience :: Developers',
@@ -45,7 +45,7 @@ classifiers = [
   'Natural Language :: English',
   'License :: OSI Approved :: MIT License',
   'License :: Public Domain',
-  ]
+]
 
 setup(
   name                  = 'pyramid_methodrewrite',
@@ -65,7 +65,7 @@ setup(
   test_suite            = 'pyramid_methodrewrite',
   entry_points          = '',
   license               = 'MIT (http://opensource.org/licenses/MIT)',
-  )
+)
 
 #------------------------------------------------------------------------------
 # end of $Id$

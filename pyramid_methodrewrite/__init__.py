@@ -9,6 +9,11 @@
 
 from pyramid.settings import aslist, asbool
 
+#------------------------------------------------------------------------------
+
+DEFAULT_PARAM_NAME   = '_method' 
+DEFAULT_HEADER_NAME  = 'X-HTTP-Method-Override'
+
 HTTP_METHODS = (
 
   # shamelessly scrubbed from:
@@ -59,21 +64,32 @@ HTTP_METHODS = (
   # draft-reschke-webdav-search:
   'SEARCH',
 
-  )
+)
 
+#------------------------------------------------------------------------------
 def factory(handler, registry):
-  get  = registry.settings.get
-  on   = [e.upper() for e in aslist(get('methodrewrite.on', 'GET POST'))]
-  to   = [e.upper() for e in aslist(get('methodrewrite.to', ' '.join(HTTP_METHODS)))]
-  name = get('methodrewrite.param', '_method')
+  get   = registry.settings.get
+  on    = [e.upper() for e in aslist(get('methodrewrite.on', 'GET POST'))]
+  to    = [e.upper() for e in aslist(get('methodrewrite.to', ' '.join(HTTP_METHODS)))]
+  pname = get('methodrewrite.param', DEFAULT_PARAM_NAME)
+  hname = get('methodrewrite.header', DEFAULT_HEADER_NAME)
   def methodrewrite_tween(request):
-    if request.method.upper() in on and name in request.params:
-      meth = request.params.get(name, '').upper()
+    if request.method.upper() not in on:
+      return handler(request)
+    if hname in request.headers:
+      meth = request.headers.get(hname, '').upper()
       if meth and ( not to or meth in to ):
         request.method = meth
+        return handler(request)
+    if pname in request.params:
+      meth = request.params.get(pname, '').upper()
+      if meth and ( not to or meth in to ):
+        request.method = meth
+        return handler(request)
     return handler(request)
   return methodrewrite_tween
 
+#------------------------------------------------------------------------------
 def includeme(config):
   '''
   Adds a pyramid :term:`tween` to `config` that converts GET or POST
@@ -89,6 +105,10 @@ def includeme(config):
   * `methodrewrite.on`: a list of incoming HTTP methods that will
     cause this tween to check the request parameters and potentially
     make the change. Defaults to ``(GET, POST)``.
+
+  * `methodrewrite.header`: the name of the header that controls the
+    requested method. Defaults to ``_method``. If present, the header
+    override takes precedence over the parameter override.
 
   * `methodrewrite.param`: the name of the parameter that controls the
     requested method. Defaults to ``_method``.
