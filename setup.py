@@ -25,8 +25,6 @@ test_dependencies = [
 ]
 
 dependencies = [
-  'pyramid              >= 1.4',
-  'distribute           >= 0.6.24',
   'pyramid              >= 1.4.2',
 ]
 
